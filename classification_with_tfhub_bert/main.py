@@ -45,6 +45,10 @@ def convert_string_to_bert_input(tokenizer, input_string, max_seq_length=128):
         input_mask.append(0)
         segment_ids.append(0)
 
+    return input_ids, input_mask, segment_ids
+
+def convert_string_to_bert_input_for_bert_module(tokenizer, input_string, max_seq_length=128):
+    input_ids, input_mask, segment_ids = convert_string_to_bert_input(tokenizer, input_string, max_seq_length)
     return np.array([input_ids]), np.array([input_mask]), np.array([segment_ids])
 
 def main(args):
@@ -58,7 +62,8 @@ def main(args):
     print(token)
 
     # inputs->outputs
-    input_ids, input_mask, segment_ids = convert_string_to_bert_input(tokenizer, string)
+    # fine-tuningする時にはここら辺の構造を把握しておく必要がありそう
+    input_ids, input_mask, segment_ids = convert_string_to_bert_input_for_bert_module(tokenizer, string)
     bert_inputs = dict(input_ids=input_ids, input_mask=input_mask, segment_ids=segment_ids) 
     bert_outputs = bert_module(inputs=bert_inputs, signature="tokens", as_dict=True)
     pooled_output = bert_outputs["pooled_output"]
