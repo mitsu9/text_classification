@@ -3,8 +3,6 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
 
-from tensorflow.python.keras import backend as K
-
 # See below link to know details of bert model and its I/F
 BERT_MODEL_HUB = "https://tfhub.dev/google/bert_uncased_L-12_H-768_A-12/1"
 
